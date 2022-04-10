@@ -1,0 +1,503 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    background: rgb(58, 62, 84);
+    background: radial-gradient(circle, rgba(58, 62, 84, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+:root {
+    --block-scale: 0.6;
+    --bush-scale: 0.8;
+    --pixel-modifier: 18.75px;
+    --grey: rgb(117, 124, 134);
+    --grass-texture: url("./grass.png");
+    --sweet-berry: url("./sweet_berry.png");
+    --fern: url("./fern.png");
+    --fox-torso-front: url("./fox/torso/torso_front.png");
+    --fox-torso-back: url("./fox/torso/torso_back.png");
+    --fox-torso-right: url("./fox/torso/torso_right.png");
+    --fox-torso-left: url("./fox/torso/torso_left.png");
+    --fox-torso-top: url("./fox/torso/torso_top.png");
+    --fox-torso-bottom: url("./fox/torso/torso_bottom.png");
+    --fox-head-front: url("./fox/head/head_front.png");
+    --fox-head-back: url("./fox/head/head_back.png");
+    --fox-head-right: url("./fox/head/head_right.png");
+    --fox-head-left: url("./fox/head/head_left.png");
+    --fox-head-top: url("./fox/head/head_top.png");
+    --fox-head-bottom: url("./fox/head/head_bottom.png");
+    --fox-snout-front: url("./fox/snout/snout_front.png");
+    --fox-snout-back: url("./fox/snout/snout_back.png");
+    --fox-snout-right: url("./fox/snout/snout_right.png");
+    --fox-snout-left: url("./fox/snout/snout_left.png");
+    --fox-snout-top: url("./fox/snout/snout_top.png");
+    --fox-snout-bottom: url("./fox/snout/snout_bottom.png");
+    --fox-tail-front: url("./fox/tail/tail_front.png");
+    --fox-tail-back: url("./fox/tail/tail_back.png");
+    --fox-tail-right: url("./fox/tail/tail_right.png");
+    --fox-tail-left: url("./fox/tail/tail_left.png");
+    --fox-tail-top: url("./fox/tail/tail_top.png");
+    --fox-tail-bottom: url("./fox/tail/tail_bottom.png");
+    --fox-ear-front: url("./fox/ear/ear_front.png");
+    --fox-ear-back: url("./fox/ear/ear_back.png");
+    --fox-ear-right: url("./fox/ear/ear_right.png");
+    --fox-ear-left: url("./fox/ear/ear_left.png");
+    --fox-ear-top: url("./fox/ear/ear_top.png");
+    --fox-ear-bottom: url("./fox/ear/ear_bottom.png");
+    --fox-leg-front: url("./fox/leg/leg_front.png");
+    --fox-leg-back: url("./fox/leg/leg_back.png");
+    --fox-leg-right: url("./fox/leg/leg_right.png");
+    --fox-leg-left: url("./fox/leg/leg_left.png");
+    --fox-leg-top: url("./fox/leg/leg_top.png");
+    --fox-leg-bottom: url("./fox/leg/leg_bottom.png");
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: var(--grey);
+}
+
+.title>h1 {
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.title>a {
+    font-weight: 300;
+    font-size: 1.5rem;
+    text-decoration-line: none;
+    color: var(--grey);
+}
+
+.scene {
+    perspective: 700px;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ground {
+    width: 700px;
+    height: 700px;
+    position: relative;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: spin 45s linear infinite;
+}
+
+.fox {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center;
+}
+
+.face {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 70px 0px rgb(0 0 0 / 70%);
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+}
+
+.part {
+    position: absolute;
+    transform-style: preserve-3d;
+    transform-origin: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fox>.torso {
+    transform: rotateX(-30deg);
+}
+
+.fox>.torso>.face.front {
+    transform: translateZ(calc(var(--pixel-modifier) * 6 / 2));
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 11);
+    background: var(--fox-torso-front) center / cover no-repeat;
+}
+
+.fox>.torso>.face.back {
+    transform: translateZ(calc(var(--pixel-modifier) * 6 / 2 * -1));
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 11);
+    background: var(--fox-torso-back) center / cover no-repeat;
+}
+
+.fox>.torso>.face.right {
+    transform: translateX(calc(var(--pixel-modifier) * 6 / 2 * -1)) rotateY(90deg);
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 11);
+    background: var(--fox-torso-right) center / cover no-repeat;
+}
+
+.fox>.torso>.face.left {
+    transform: translateX(calc(var(--pixel-modifier) * 6 / 2)) rotateY(-90deg);
+    width: calc(var(--pixel-modifier) * 6);
+    height: 206.25px;
+    background: var(--fox-torso-left) center / cover no-repeat;
+}
+
+.fox>.torso>.face.top {
+    transform: translateY(calc(var(--pixel-modifier) * 11 / 2 * -1)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-torso-top) center / cover no-repeat;
+}
+
+.fox>.torso>.face.bottom {
+    transform: translateY(calc(var(--pixel-modifier) * 11 / 2)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-torso-bottom) center / cover no-repeat;
+}
+
+.fox>.head {
+    transform: translateY(calc(var(--pixel-modifier) * -7)) translateZ(calc(var(--pixel-modifier) * 3.25));
+}
+
+.fox>.head>.part>.face.front {
+    transform: translateZ(calc(var(--pixel-modifier) * 6 / 2));
+    width: calc(var(--pixel-modifier) * 8);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-head-front) center / cover no-repeat;
+}
+
+.fox>.head>.part>.face.back {
+    transform: translateZ(calc(var(--pixel-modifier) * 6 / 2 * -1));
+    width: calc(var(--pixel-modifier) * 8);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-head-back) center / cover no-repeat;
+}
+
+.fox>.head>.part>.face.right {
+    transform: translateX(calc(var(--pixel-modifier) * 8 / 2 * -1)) rotateY(90deg);
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-head-right) center / cover no-repeat;
+}
+
+.fox>.head>.part>.face.left {
+    transform: translateX(calc(var(--pixel-modifier) * 8 / 2)) rotateY(-90deg);
+    width: calc(var(--pixel-modifier) * 6);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-head-left) center / cover no-repeat;
+}
+
+.fox>.head>.part>.face.top {
+    transform: translateY(calc(var(--pixel-modifier) * 6 / 2 * -1)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 8);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-head-top) center / cover no-repeat;
+}
+
+.fox>.head>.part>.face.bottom {
+    transform: translateY(calc(var(--pixel-modifier) * 6 / 2)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 8);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-head-bottom) center / cover no-repeat;
+}
+
+.fox>.head>.snout {
+    transform: translateY(calc(var(--pixel-modifier) * 2)) translateZ(calc(var(--pixel-modifier) * 3.25));
+}
+
+.fox>.head>.snout>.face.front {
+    transform: translateZ(calc(var(--pixel-modifier) * 3 / 2));
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-snout-front) center / cover no-repeat;
+}
+
+.fox>.head>.snout>.face.back {
+    transform: translateZ(calc(var(--pixel-modifier) * 3 / 2 * -1));
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-snout-back) center / cover no-repeat;
+}
+
+.fox>.head>.snout>.face.right {
+    transform: translateX(calc(var(--pixel-modifier) * 4 / 2 * -1)) rotateY(90deg);
+    width: calc(var(--pixel-modifier) * 3);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-snout-right) center / cover no-repeat;
+}
+
+.fox>.head>.snout>.face.left {
+    transform: translateX(calc(var(--pixel-modifier) * 4 / 2)) rotateY(-90deg);
+    width: calc(var(--pixel-modifier) * 3);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-snout-left) center / cover no-repeat;
+}
+
+.fox>.head>.snout>.face.top {
+    transform: translateY(calc(var(--pixel-modifier) * 2 / 2 * -1)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 3);
+    background: var(--fox-snout-top) center / cover no-repeat;
+}
+
+.fox>.head>.snout>.face.bottom {
+    transform: translateY(calc(var(--pixel-modifier) * 2 / 2)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 3);
+    background: var(--fox-snout-bottom) center / cover no-repeat;
+}
+
+.fox>.head>.ear.left {
+    transform:
+        translateX(calc(var(--pixel-modifier) * -3)) translateY(calc(var(--pixel-modifier) * -4)) translateZ(calc(var(--pixel-modifier) * 1.75));
+}
+
+.fox>.head>.ear.right {
+    transform:
+        translateX(calc(var(--pixel-modifier) * 3)) translateY(calc(var(--pixel-modifier) * -4)) translateZ(calc(var(--pixel-modifier) * 1.75)) scaleX(-1);
+}
+
+.fox>.head>.ear>.face {
+    box-shadow: inset 0 0 70px 0px rgb(0 0 0 / 30%);
+}
+
+.fox>.head>.ear>.face.front {
+    transform: translateZ(calc(var(--pixel-modifier) * 1 / 2));
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-ear-front) center / cover no-repeat;
+}
+
+.fox>.head>.ear>.face.back {
+    transform: translateZ(calc(var(--pixel-modifier) * 1 / 2 * -1));
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-ear-back) center / cover no-repeat;
+}
+
+.fox>.head>.ear>.face.right {
+    transform: translateX(calc(var(--pixel-modifier) * 2 / 2 * -1)) rotateY(90deg);
+    width: calc(var(--pixel-modifier) * 1);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-ear-right) center / cover no-repeat;
+}
+
+.fox>.head>.ear>.face.left {
+    transform: translateX(calc(var(--pixel-modifier) * 2 / 2)) rotateY(-90deg);
+    width: calc(var(--pixel-modifier) * 1);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-ear-left) center / cover no-repeat;
+}
+
+.fox>.head>.ear>.face.top {
+    transform: translateY(calc(var(--pixel-modifier) * 2 / 2 * -1)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 1);
+    background: var(--fox-ear-top) center / cover no-repeat;
+}
+
+.fox>.head>.ear>.face.bottom {
+    transform: translateY(calc(var(--pixel-modifier) * 2 / 2)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 1);
+    background: var(--fox-ear-bottom) center / cover no-repeat;
+}
+
+.fox>.tail {
+    transform: rotateX(-80deg) translateY(calc(var(--pixel-modifier) * 8)) translateZ(calc(var(--pixel-modifier) * 2));
+}
+
+.fox>.tail>.face.front {
+    transform: translateZ(calc(var(--pixel-modifier) * 5 / 2));
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 9);
+    background: var(--fox-tail-front) center / cover no-repeat;
+}
+
+.fox>.tail>.face.back {
+    transform: translateZ(calc(var(--pixel-modifier) * 5 / 2 * -1));
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 9);
+    background: var(--fox-tail-back) center / cover no-repeat;
+}
+
+.fox>.tail>.face.right {
+    transform: translateX(calc(var(--pixel-modifier) * 4 / 2 * -1)) rotateY(90deg);
+    width: calc(var(--pixel-modifier) * 5);
+    height: calc(var(--pixel-modifier) * 9);
+    background: var(--fox-tail-right) center / cover no-repeat;
+}
+
+.fox>.tail>.face.left {
+    transform: translateX(calc(var(--pixel-modifier) * 4 / 2)) rotateY(-90deg);
+    width: calc(var(--pixel-modifier) * 5);
+    height: calc(var(--pixel-modifier) * 9);
+    background: var(--fox-tail-left) center / cover no-repeat;
+}
+
+.fox>.tail>.face.top {
+    transform: translateY(calc(var(--pixel-modifier) * 9 / 2 * -1)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 5);
+    background: var(--fox-tail-top) center / cover no-repeat;
+}
+
+.fox>.tail>.face.bottom {
+    transform: translateY(calc(var(--pixel-modifier) * 9 / 2)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 4);
+    height: calc(var(--pixel-modifier) * 5);
+    background: var(--fox-tail-bottom) center / cover no-repeat;
+}
+
+.fox>.leg.left.front {
+    transform:
+        rotateX(25deg) translateY(calc(var(--pixel-modifier) * 4)) translateZ(calc(var(--pixel-modifier) * 1)) translateX(calc(var(--pixel-modifier) * -2.2));
+}
+
+.fox>.leg.right.front {
+    transform:
+        rotateX(25deg) translateY(calc(var(--pixel-modifier) * 4)) translateZ(calc(var(--pixel-modifier) * 1)) translateX(calc(var(--pixel-modifier) * 2.2)) scaleX(-1);
+}
+
+.fox>.leg.left.back {
+    transform:
+        rotateX(80deg) translateY(calc(var(--pixel-modifier) * -0.5)) translateZ(calc(var(--pixel-modifier) * -5)) translateX(calc(var(--pixel-modifier) * -2.2));
+}
+
+.fox>.leg.right.back {
+    transform:
+        rotateX(80deg) translateY(calc(var(--pixel-modifier) * -0.5)) translateZ(calc(var(--pixel-modifier) * -5)) translateX(calc(var(--pixel-modifier) * 2.2)) scaleX(-1);
+}
+
+.fox>.leg>.face {
+    box-shadow: inset 0 0 70px 0px rgb(0 0 0 / 30%);
+}
+
+.fox>.leg>.face.front {
+    transform: translateZ(calc(var(--pixel-modifier) * 2 / 2)) scaleX(-1);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-leg-front) center / cover no-repeat;
+}
+
+.fox>.leg>.face.back {
+    transform: translateZ(calc(var(--pixel-modifier) * 2 / 2 * -1));
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-leg-back) center / cover no-repeat;
+}
+
+.fox>.leg>.face.right {
+    transform: translateX(calc(var(--pixel-modifier) * 2 / 2 * -1)) rotateY(90deg);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-leg-right) center / cover no-repeat;
+}
+
+.fox>.leg>.face.left {
+    transform: translateX(calc(var(--pixel-modifier) * 2 / 2)) rotateY(-90deg);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 6);
+    background: var(--fox-leg-left) center / cover no-repeat;
+}
+
+.fox>.leg>.face.top {
+    transform: translateY(calc(var(--pixel-modifier) * 6 / 2 * -1)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-leg-top) center / cover no-repeat;
+}
+
+.fox>.leg>.face.bottom {
+    transform: translateY(calc(var(--pixel-modifier) * 6 / 2)) rotateX(90deg);
+    width: calc(var(--pixel-modifier) * 2);
+    height: calc(var(--pixel-modifier) * 2);
+    background: var(--fox-leg-bottom) center / cover no-repeat;
+}
+
+.grass {
+    width: calc(var(--pixel-modifier) * 16 * 3);
+    height: calc(var(--pixel-modifier) * 16 * 3);
+    background: var(--grass-texture) center / cover no-repeat;
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    transform: rotateX(90deg) translateZ(-120px);
+}
+
+.bush {
+    width: 500px;
+    height: 500px;
+}
+
+.berry {
+    transform: translateX(240px) translateZ(90px) rotateY(45deg) scale3d(var(--bush-scale), var(--bush-scale), var(--bush-scale));
+}
+
+.fern {
+    transform: translateX(-240px) translateZ(-90px) rotateY(10deg) scale3d(var(--bush-scale), var(--bush-scale), var(--bush-scale));
+}
+
+.bush-part {
+    width: calc(var(--pixel-modifier) * 16);
+    height: calc(var(--pixel-modifier) * 16);
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+}
+
+.berry>.bush-part {
+    background: var(--sweet-berry) center / cover no-repeat;
+    filter: saturate(0.9);
+}
+
+.fern>.bush-part {
+    background: var(--fern) center / cover no-repeat;
+    filter: saturate(0.9);
+}
+
+.bush-part.part-2 {
+    transform: rotateY(90deg);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateY(0deg) translateY(50px) scale3d(var(--block-scale), var(--block-scale), var(--block-scale));
+    }
+
+    50% {
+        transform: rotateY(180deg) translateY(50px) scale3d(var(--block-scale), var(--block-scale), var(--block-scale));
+    }
+
+    100% {
+        transform: rotateY(360deg) translateY(50px) scale3d(var(--block-scale), var(--block-scale), var(--block-scale));
+    }
+}
