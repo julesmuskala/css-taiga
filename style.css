@@ -24,6 +24,7 @@ body {
     --block-scale: 0.6;
     --bush-scale: 0.8;
     --pixel-modifier: 18.75px;
+    --grey-transparent: rgb(117, 124, 134, 0);
     --grey: rgb(117, 124, 134);
     --grass-texture: url("./grass.png");
     --sweet-berry: url("./sweet_berry.png");
@@ -66,6 +67,18 @@ body {
     --fox-leg-bottom: url("./fox/leg/leg_bottom.png");
 }
 
+@media screen and (max-width: 550px) {
+    :root {
+        --block-scale: 0.4;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    :root {
+        --block-scale: 0.3;
+    }
+}
+
 .title {
     display: flex;
     justify-content: center;
@@ -82,8 +95,13 @@ body {
 .title>a {
     font-weight: 300;
     font-size: 1.5rem;
-    text-decoration-line: none;
+    text-decoration: underline var(--grey-transparent);
     color: var(--grey);
+    transition: text-decoration-color 300ms;
+}
+
+.title>a:hover {
+    text-decoration-color: var(--grey);
 }
 
 .scene {
@@ -99,8 +117,8 @@ body {
 }
 
 .ground {
-    width: 700px;
-    height: 700px;
+    width: 600px;
+    height: 600px;
     position: relative;
     transform-style: preserve-3d;
     display: flex;
