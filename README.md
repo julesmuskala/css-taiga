@@ -3,3 +3,5 @@
 Check out [live demo](https://julesmuskala.github.io/css-taiga/).
 
 Project uses proprietary assets belonging to Mojang Synergies AB under [Brand and Asset Guidelines](https://www.minecraft.net/en-us/terms).
+
+![App screenshot presenting 3D Minecraft Fox](image.png)
